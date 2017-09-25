@@ -1,0 +1,78 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <title>RoutEasy Challenge</title>
+    <link rel="stylesheet" href="/assets/bootstrap.min.css" />
+    <link rel="stylesheet" href="/assets/leaflet.css" />
+    <script src="/assets/leaflet.js"></script>
+    <script src="http://maps.google.com/maps/api/js?v=3.exp&key=AIzaSyDyt4MRunBjbBOt9IiKJbDEhZYosIgA5q8"></script>
+    <script src="/assets/angular.min.js"></script>
+    <style>
+        #mapid{
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default col-sm-5">
+                <div class="panel-body" >
+                    <form name="formCadastro" ng-controller="formcontroller" ng-submit="submit()">
+                        <div ng-repeat="x in dados" class="{{x.class}}" inputemplate></div>
+                        <button class="btn btn-standard btn-block" ng-click="searchmap($event)">Procurar Endereço</button>
+                        <button type="submit" class="btn btn-primary btn-block">Cadastrar Cliente</button>
+                        <button type="reset" class="btn btn-warning btn-block" ng-click="reset()">Resetar Cadastro</button>
+                    </form>
+                </div>
+            </div>
+            <div class="panel panel-default col-sm-7">
+                <div class="panel-body">
+                    <div ng-controller="mapcontroller" id="mapid"></div>
+                    <div ng-controller="tablecontroller" class="panel panel-default">
+                        <div class="panel-heading">
+                            Total de Clientes: {{totalclientes}}; Peso Total: {{totalpeso}} kg; Ticket Médio*: {{totalpeso/totalclientes | number:2}}
+                        </div>
+                        <table class="panel-body table table-bordered">
+                            <thead>
+                                <th>Nome</th>
+                                <th>Rua</th>
+                                <th>Cidade</th>
+                                <th>País</th>
+                                <th>Peso</th>
+                                <th>Lat</th>
+                                <th>Lng</th>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="item in listaclientes">
+                                    <td>{{item.cliente}}</td>
+                                    <td>{{item.logradouro}}</td>
+                                    <td>{{item.cidade}}</td>
+                                    <td>{{item.pais}}</td>
+                                    <td>{{item.peso}}</td>
+                                    <td>{{item.latitude | number:3}}</td>
+                                    <td>{{item.longitude | number:3}}</td>
+                                    <td>
+                                        <button ng-click="delete(item)">Remover</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="panel-footer">
+                            * Peso Total / Total de Clientes                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/app/app.js"></script>
+    <script src="/app/factory/rest.js"></script>
+    <script src="/app/factory/geo.js"></script>
+    <script src="/app/controllers/maps.js"></script>
+    <script src="/app/controllers/table.js"></script>
+    <script src="/app/controllers/form.js"></script>
+  </body>
+</html>
