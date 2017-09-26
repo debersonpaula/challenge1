@@ -95,7 +95,14 @@ class TServer{
         mongoose.connection.on('disconnected',function(){ console.log('Mongoose desconectado.'); });
         mongoose.connection.on('open',function(){ console.log('Conexão Mongoose aberta.'); });
         mongoose.connect(dbURI,{useMongoClient: true});
-        this.app.listen(port,function(){ console.log(`Servidor HTTP ligado na porta ${port}`) })
+        this.app.listen(port,function(err:any){
+            if (err){
+                console.log('Não foi possível inicializar o servidor na porta ' + port);
+                throw err;
+            }else{
+                console.log(`Servidor HTTP ligado na porta ${port}`) 
+            }
+        });
     }
 }
 

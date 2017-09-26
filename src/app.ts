@@ -13,4 +13,4 @@ Server.AddREST('/rest');
 Server.DatabaseURL = "mongodb://localhost/routeasy";
 
 //inicia o servidor
-Server.Listen('80');
+Server.Listen('3000');
